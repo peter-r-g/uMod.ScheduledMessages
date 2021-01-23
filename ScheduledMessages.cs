@@ -10,7 +10,7 @@ using Oxide.Game.Rust.Libraries;
 
 namespace Oxide.Plugins
 {
-    [Info("Scheduled Messages", "gunman435", "1.0.0")]
+    [Info("Scheduled Messages", "gunman435", "1.0.1")]
     [Description("Allows the creation of custom messages to broadcast to players.")]
     class ScheduledMessages : CovalencePlugin
     {
@@ -240,7 +240,7 @@ namespace Oxide.Plugins
             {
                 // Get next message index.
                 nextMessage++;
-                if (nextMessage > config.scheduledMessages.Count)
+                if (nextMessage >= config.scheduledMessages.Count)
                     nextMessage = 0;
 
                 // Get next message.
