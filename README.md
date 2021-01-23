@@ -1,14 +1,14 @@
-# Features
+## Features
 * Able to temporarily enable/disable the scheduled messages from broadcasting.
 * Fully customizable both in and out of the game.
 * (Rust only) Customizable avatar image that shows in place of the Rust logo in scheduled messages.
 * Developer API for broadcasting scheduled messages whenever you want and knowing when a message has been broadcasted.
 
-# Notes
+## Notes
 * If you have no scheduled messages, the plugin will disable the timer that broadcasts the messages. You will have to enable the timer again for it to start broadcasting. See chat commands for how to do this.
 * This has only been tested within a Rust dedicated server, although the code should be supported universally. If any problems occur, let me know.
 
-# Permissions
+## Permissions
 * scheduledmessages.cmd - Required to use the scheduledmessages/sm commands.
 * scheduledmessages.add - Required to use the "add" sub-command.
 * scheduledmessages.remove - Required to use the "remove" sub-command.
@@ -19,7 +19,7 @@
 * scheduledmessages.off - Required to use the "off" sub-command.
 * scheduledmessages.random - Required to use the "random" sub-command.
 
-# Configuration
+## Configuration
 ```json  
 {
   "Scheduled Messages": [
@@ -31,7 +31,7 @@
 }
 ```
 
-# Chat/Console Commands
+## Chat/Console Commands
 All commands go through 2 primary ones. `scheduledmessages` and `sm` for short form. Under these commands there are a variety of sub commands you can use.
 * add/a - Adds a new scheduled message, requires the scheduledmessages.add permission.
   * Usage: `<scheduledmessages/sm> <add/a> <message>`
@@ -66,14 +66,14 @@ All commands go through 2 primary ones. `scheduledmessages` and `sm` for short f
   * Chat Example: /scheduledmessages random on
   * Console Example: sm random off
 
-# Developers
-## Hooks
+## Developers
+### Hooks
 ```C#
 void OnScheduledMessageBroadcasted(string message, ulong avatarID)
 ```
 The `message` parameter is the message that was broadcasted to all players. The `avatarID` parameter will only be useful in Rust. That parameter is the SteamID64 of the avatar used in the message.
 
-## Functions
+### Functions
 ```C#
 API_GetScheduledMessagesList() : List<string>
 ```
