@@ -2,6 +2,7 @@
 * Able to temporarily enable/disable the scheduled messages from broadcasting.
 * Fully customizable both in and out of the game.
 * (Rust only) Customizable avatar image that shows in place of the Rust logo in scheduled messages.
+* (Only tested in Rust) Rich text support. See [here](https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/StyledText.html)
 * Developer API for broadcasting scheduled messages whenever you want and knowing when a message has been broadcasted.
 
 ## Notes
