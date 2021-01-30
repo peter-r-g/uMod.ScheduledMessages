@@ -14,40 +14,45 @@ All commands go through two primary ones. `scheduledmessages` and `smsg` for sho
 * add/a - Adds a new scheduled message, requires the scheduledmessages.add permission.
   * Usage: `<scheduledmessages/smsg> <add/a> <message>`
   * Chat Example: /scheduledmessages add This is a test message.
-  * Console Example: sm a This is a test message.
+  * Console Example: smsg a This is a test message.
 * Remove/r - Removes a scheduled message, requires the scheduledmessages.remove permission.
   * Usage: `<scheduledmessages/smsg> <remove/r> <position>`
-  * Chat Example: /scheduledmessages remove 0
-  * Console Example: sm r 0
+  * Chat Example: /scheduledmessages remove 1
+  * Console Example: smsg r 1
+* Edit/e - Edits a scheduled message, requires the scheduledmessages.edit permission.
+  * Usage: `<scheduledmessages/smsg> <edit/e> <position> <message>`
+  * Chat Example: /scheduledmessages edit 1 This is a new test message.
+  * Console Example: smsg e 1 This is a new test message.
 * Show/s - Shows all currently registered messages. This will also display their position which you can use in the remove command. Requires the scheduledmessages.show permission.
   * Usage: `<scheduledmessages/smsg> <show/s>`
   * Chat Example: /scheduledmessages show
-  * Console Example: sm s
+  * Console Example: smsg s
 * Setavatar/sa - (Only used in Rust) Sets the SteamID64 that is used for the avatar in messages. Requires the scheduledmessages.setavatar permission.
   * Usage: `<scheduledmessages/smsg> <setavatar/sa> <steamid64>`
   * Chat Example: /scheduledmessages setavatar 76561198063494192
-  * Console Example: sm sa 76561198063494192
+  * Console Example: smsg sa 76561198063494192
 * Setinterval/si - Sets the interval at which messages are broadcasted (in seconds). Requires the scheduledmessages.setinterval permission.
   * Usage: `<scheduledmessages/smsg> <setinterval/si> <seconds>`
   * Chat Example: /scheduledmessages setinterval 30
-  * Console Example: sm si 30
+  * Console Example: smsg si 30
 * On - Turns on the timer for broadcasting messages. Requires the scheduledmessages.on permission.
   * Usage: `<scheduledmessages/smsg> <on>`
   * Chat Example: /scheduledmessages on
-  * Console Example: sm on
+  * Console Example: smsg on
 * Off - Turns off the timer for broadcasting messages. Requires the scheduledmessages.off permission.
   * Usage: `<scheduledmessages/smsg> <off>`
   * Chat Example: /scheduledmessages off
-  * Console Example: sm off
+  * Console Example: smsg off
 * Random - Sets whether the order of scheduled messages is randomized or not. Requires the scheduledmessages.random permission.
   * Usage: `<scheduledmessages/smsg> <random> <on/off>`
   * Chat Example: /scheduledmessages random on
-  * Console Example: sm random off
+  * Console Example: smsg random off
 
 ## Permissions
 * scheduledmessages.cmd - Required to use the scheduledmessages/sm commands.
 * scheduledmessages.add - Required to use the "add" sub-command.
 * scheduledmessages.remove - Required to use the "remove" sub-command.
+* scheduledmessages.edit - Required to use the "edit" sub-command.
 * scheduledmessages.show - Required to use the "show" sub-command.
 * scheduledmessages.setavatar - Required to use the "set avatar" sub-command.
 * scheduledmessages.setinterval - Required to use the "set interval" sub-command.
@@ -73,6 +78,7 @@ All commands go through two primary ones. `scheduledmessages` and `smsg` for sho
   "MissingPermission": "You do not have permission to use the '{0}' command!",
   "ScheduledMessagesAdded": "The message '{0}' has been added!",
   "ScheduledMessagesRemoved": "The message at position {0} has been removed!",
+  "ScheduledMessagesEdited": "The message at position {0} has been changed to '{1}'",
   "ScheduledMessagesShow": "These are the current messages:\n{0}",
   "ScheduledMessagesAvatarChanged": "Scheduled messages avatar has been changed to {0}!",
   "ScheduledMessagesIntervalChanged": "Scheduled messages interval has been changed to {0} seconds!",
@@ -88,6 +94,7 @@ All commands go through two primary ones. `scheduledmessages` and `smsg` for sho
   "ScheduledMessagesHelp": "Schedules messages are currently {0}. These are the commands available:\n{1}",
   "ScheduledMessagesAddUsage": "Usage: <scheduledmessages/smsg> <add/a> <message>",
   "ScheduledMessagesRemoveUsage": "Usage: <scheduledmessages/smsg> <remove/r> <position>",
+  "ScheduledMessagesEditUsage": "Usage: <scheduledmessages/smsg> <edit/e> <position> <message>",
   "ScheduledMessagesShowUsage": "Usage: <scheduledmessages/smsg> <show/s>",
   "ScheduledMessagesSetAvatarUsage": "Usage: <scheduledmessages/smsg> <setavatar/sa> <steamid64>",
   "ScheduledMessagesSetIntervalUsage": "Usage: <scheduledmessages/smsg> <setinterval/si> <seconds>",
