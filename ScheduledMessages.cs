@@ -150,23 +150,23 @@ namespace Oxide.Plugins
                 // Generic help message for when no recognizable sub-command is used.
                 ["ScheduledMessagesHelp"] = "Schedules messages are currently {0}. These are the commands available:\n{1}",
                 // Usage text for add command.
-                ["ScheduledMessagesAddUsage"] = "Usage: <scheduledmessages/sm> <add/a> <message>",
+                ["ScheduledMessagesAddUsage"] = "Usage: <scheduledmessages/smsg> <add/a> <message>",
                 // Usage text for remove command.
-                ["ScheduledMessagesRemoveUsage"] = "Usage: <scheduledmessages/sm> <remove/r> <position>",
+                ["ScheduledMessagesRemoveUsage"] = "Usage: <scheduledmessages/smsg> <remove/r> <position>",
                 // Usage text for edit command.
                 ["ScheduledMessagesEditUsage"] = "Usage: <scheduledmessages/smsg> <edit/e> <position> <message>",
                 // Usage text for show command.
-                ["ScheduledMessagesShowUsage"] = "Usage: <scheduledmessages/sm> <show/s>",
+                ["ScheduledMessagesShowUsage"] = "Usage: <scheduledmessages/smsg> <show/s>",
                 // Usage text for set avatar command.
-                ["ScheduledMessagesSetAvatarUsage"] = "Usage: <scheduledmessages/sm> <setavatar/sa> <steamid64>",
+                ["ScheduledMessagesSetAvatarUsage"] = "Usage: <scheduledmessages/smsg> <setavatar/sa> <steamid64>",
                 // Usage text for set interval command.
-                ["ScheduledMessagesSetIntervalUsage"] = "Usage: <scheduledmessages/sm> <setinterval/si> <seconds>",
+                ["ScheduledMessagesSetIntervalUsage"] = "Usage: <scheduledmessages/smsg> <setinterval/si> <seconds>",
                 // Usage text for on command.
-                ["ScheduledMessagesOnUsage"] = "Usage: <scheduledmessages/sm> <on>",
+                ["ScheduledMessagesOnUsage"] = "Usage: <scheduledmessages/smsg> <on>",
                 // Usage text for off command.
-                ["ScheduledMessagesOffUsage"] = "Usage: <scheduledmessages/sm> <off>",
+                ["ScheduledMessagesOffUsage"] = "Usage: <scheduledmessages/smsg> <off>",
                 // Usage text for random command.
-                ["ScheduledMessagesRandomUsage"] = "Usage: <scheduledmessages/sm> <random> <on/off>",
+                ["ScheduledMessagesRandomUsage"] = "Usage: <scheduledmessages/smsg> <random> <on/off>",
 
                 // Direct translation for "on", used in help message.
                 ["on"] = "on",
