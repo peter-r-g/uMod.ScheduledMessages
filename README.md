@@ -33,7 +33,7 @@
 ```
 
 ## Chat/Console Commands
-All commands go through 2 primary ones. `scheduledmessages` and `sm` for short form. Under these commands there are a variety of sub commands you can use.
+All commands go through three primary ones. `scheduledmessages` and `sm` or `smsg` for short form. Under these commands there are a variety of sub commands you can use.
 * add/a - Adds a new scheduled message, requires the scheduledmessages.add permission.
   * Usage: `<scheduledmessages/sm/smsg> <add/a> <message>`
   * Chat Example: /scheduledmessages add This is a test message.
