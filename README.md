@@ -52,6 +52,7 @@ All commands go through two primary ones. `scheduledmessages` and `smsg` for sho
 * scheduledmessages.cmd - Required to use the scheduledmessages/sm commands.
 * scheduledmessages.add - Required to use the "add" sub-command.
 * scheduledmessages.remove - Required to use the "remove" sub-command.
+* scheduledmessages.edit - Required to use the "edit" sub-command.
 * scheduledmessages.show - Required to use the "show" sub-command.
 * scheduledmessages.setavatar - Required to use the "set avatar" sub-command.
 * scheduledmessages.setinterval - Required to use the "set interval" sub-command.
@@ -77,6 +78,7 @@ All commands go through two primary ones. `scheduledmessages` and `smsg` for sho
   "MissingPermission": "You do not have permission to use the '{0}' command!",
   "ScheduledMessagesAdded": "The message '{0}' has been added!",
   "ScheduledMessagesRemoved": "The message at position {0} has been removed!",
+  "ScheduledMessagesEdited": "The message at position {0} has been changed to '{1}'",
   "ScheduledMessagesShow": "These are the current messages:\n{0}",
   "ScheduledMessagesAvatarChanged": "Scheduled messages avatar has been changed to {0}!",
   "ScheduledMessagesIntervalChanged": "Scheduled messages interval has been changed to {0} seconds!",
@@ -92,6 +94,7 @@ All commands go through two primary ones. `scheduledmessages` and `smsg` for sho
   "ScheduledMessagesHelp": "Schedules messages are currently {0}. These are the commands available:\n{1}",
   "ScheduledMessagesAddUsage": "Usage: <scheduledmessages/smsg> <add/a> <message>",
   "ScheduledMessagesRemoveUsage": "Usage: <scheduledmessages/smsg> <remove/r> <position>",
+  "ScheduledMessagesEditUsage": "Usage: <scheduledmessages/smsg> <edit/e> <position> <message>",
   "ScheduledMessagesShowUsage": "Usage: <scheduledmessages/smsg> <show/s>",
   "ScheduledMessagesSetAvatarUsage": "Usage: <scheduledmessages/smsg> <setavatar/sa> <steamid64>",
   "ScheduledMessagesSetIntervalUsage": "Usage: <scheduledmessages/smsg> <setinterval/si> <seconds>",
