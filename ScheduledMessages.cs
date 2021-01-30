@@ -266,7 +266,7 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.cmd"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command}"));
                 return;
             }
             // If no arguments are passed then just display help section.
@@ -341,7 +341,7 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.add"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
 
@@ -354,14 +354,14 @@ namespace Oxide.Plugins
             // Check to make sure it isn't still blank.
             if (newMessage == "")
             {
-                ply.Reply(Lang("ScheduledMessagesAddUsage", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesAddUsage", ply.Id));
                 return false;
             }
             // Add the new message.
             else
             {
                 config.scheduledMessages.Add(newMessage);
-                ply.Reply(Lang("ScheduledMessagesAdded", ply.Id, newMessage));
+                PrintToChat(ply, Lang("ScheduledMessagesAdded", ply.Id, newMessage));
                 return true;
             }
         }
@@ -377,7 +377,7 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.remove"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
 
@@ -388,13 +388,13 @@ namespace Oxide.Plugins
                 // Attempt to remove the message at the parsed index.
                 config.scheduledMessages.RemoveAt(removeIndex);
                 // Let the player know the message at that index was removed.
-                ply.Reply(Lang("ScheduledMessagesRemoved", ply.Id, args[1]));
+                PrintToChat(ply, Lang("ScheduledMessagesRemoved", ply.Id, args[1]));
 
                 // If no messages are left, turn off the scheduled messages and let the player know.
                 if (config.scheduledMessages.Count == 0)
                 {
                     StopScheduledMessages();
-                    ply.Reply("ScheduledMessagesOff2", ply.Id);
+                    PrintToChat(ply, Lang("ScheduledMessagesOff2", ply.Id));
                 }
 
                 return true;
@@ -402,7 +402,10 @@ namespace Oxide.Plugins
             catch (Exception)
             {
                 // Something went wrong, let the player know how to use the command.
-                ply.Reply(Lang("ScheduledMessagesRemoveUsage", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesRemoveUsage", ply.Id));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                    // Let the player know the message at that index+1 was edited.
+                    PrintToChat(ply, Lang("ScheduledMessagesEdited", ply.Id, args[1], newMessage));
                 return false;
             }
         }
@@ -418,7 +421,7 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.show"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
 
@@ -432,7 +435,7 @@ namespace Oxide.Plugins
                     scheduledMessages += $"{i}: {config.scheduledMessages[i]}\n";
 
             // Show the player all the messages that are registered.
-            ply.Reply(Lang("ScheduledMessagesShow", ply.Id, scheduledMessages));
+            PrintToChat(ply, Lang("ScheduledMessagesShow", ply.Id, scheduledMessages));
             return false;
         }
 
@@ -448,13 +451,13 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.setavatar"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
             // Check if the argument is exactly 17 characters long (the size of all SteamID64s) and make sure it isn't the default avatarID.
             else if (args[1].Length != 17 && args[1] != "0")
             {
-                ply.Reply(Lang("ScheduledMessagesSetAvatarUsage", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesSetAvatarUsage", ply.Id));
                 return false;
             }
 
@@ -463,13 +466,13 @@ namespace Oxide.Plugins
                 // Attempt to parse the new avatar.
                 config.scheduledMessagesAvatarID = ulong.Parse(args[1]);
                 // Let the player know the avatar has been changed.
-                ply.Reply(Lang("ScheduledMessagesAvatarChanged", ply.Id, args[1]));
+                PrintToChat(ply, Lang("ScheduledMessagesAvatarChanged", ply.Id, args[1]));
                 return true;
             }
             catch (Exception)
             {
                 // Something went wrong, let the player know how to use the command.
-                ply.Reply(Lang("ScheduledMessagesSetAvatarUsage", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesSetAvatarUsage", ply.Id));
                 return false;
             }
         }
@@ -485,7 +488,7 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.setinterval"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
 
@@ -495,14 +498,14 @@ namespace Oxide.Plugins
                 config.scheduledMesssagesInterval = float.Parse(args[1]);
                 // Start the scheduled messages.
                 StartScheduledMessages();
-                // Let the player know the interval has been changed.
-                ply.Reply(Lang("ScheduledMessagesIntervalChanged", ply.Id, args[1]));
                 return true;
+                    // Let the player know the interval has been changed.
+                    PrintToChat(ply, Lang("ScheduledMessagesIntervalChanged", ply.Id, args[1]));
             }
             catch (Exception)
             {
                 // Something went wrong, let the player know how to use the command.
-                ply.Reply(Lang("ScheduledMessagesSetIntervalUsage", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesSetIntervalUsage", ply.Id));
                 return false;
             }
         }
@@ -518,20 +521,20 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.on"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
             // Check if the scheduled messages timer is already running.
             else if (IsTimerRunning())
             {
-                ply.Reply(Lang("ScheduledMessagesAlreadyOn", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesAlreadyOn", ply.Id));
                 return false;
             }
 
             // Start the scheduled messages.
             StartScheduledMessages();
             // Let the player know this happened.
-            ply.Reply(Lang("ScheduledMessagesOn"));
+            PrintToChat(ply, Lang("ScheduledMessagesOn"));
             return false;
         }
 
@@ -546,20 +549,20 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.off"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
             // Check if the scheduled messages timer is already turned off.
             else if (!IsTimerRunning())
             {
-                ply.Reply(Lang("ScheduledMessagesAlreadyOff", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesAlreadyOff", ply.Id));
                 return false;
             }
 
             // Stop the scheduled messages.
             StopScheduledMessages();
             // Let the player know this happened.
-            ply.Reply(Lang("ScheduledMessagesOff"));
+            PrintToChat(ply, Lang("ScheduledMessagesOff"));
             return false;
         }
 
@@ -574,13 +577,13 @@ namespace Oxide.Plugins
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.off"))
             {
-                ply.Reply(Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
                 return false;
             }
             // Check if we got enough arguments.
             else if (args.Length < 2)
             {
-                ply.Reply(Lang("ScheduledMessagesRandomUsage", ply.Id));
+                PrintToChat(ply, Lang("ScheduledMessagesRandomUsage", ply.Id));
                 return false;
             }
 
@@ -592,14 +595,14 @@ namespace Oxide.Plugins
                     // Check if this setting is already turned on.
                     if (config.scheduledMessagesRandom)
                     {
-                        ply.Reply(Lang("ScheduledMessagesRandomAlreadyOn", ply.Id));
+                        PrintToChat(ply, Lang("ScheduledMessagesRandomAlreadyOn", ply.Id));
                         return false;
                     }
 
                     // Turn on the random message functionality.
                     config.scheduledMessagesRandom = true;
                     // Let the player know of the change.
-                    ply.Reply(Lang("ScheduledMessagesRandomOn", ply.Id));
+                    PrintToChat(ply, Lang("ScheduledMessagesRandomOn", ply.Id));
                     return true;
                 // Turn it off.
                 case "off":
@@ -607,19 +610,19 @@ namespace Oxide.Plugins
                     // Check if this setting is already turned off.
                     if (!config.scheduledMessagesRandom)
                     {
-                        ply.Reply(Lang("ScheduledMessagesRandomAlreadyOff", ply.Id));
+                        PrintToChat(ply, Lang("ScheduledMessagesRandomAlreadyOff", ply.Id));
                         return false;
                     }
 
                     // Turn off the random message functionality.
                     config.scheduledMessagesRandom = false;
                     // Let the player know of the change.
-                    ply.Reply(Lang("ScheduledMessagesRandomOff", ply.Id));
+                    PrintToChat(ply, Lang("ScheduledMessagesRandomOff", ply.Id));
                     return true;
                 // Unknown response.
                 default:
                     // Received invalid input, let the player know how to use the command.
-                    ply.Reply(Lang("ScheduledMessagesRandomUsage", ply.Id));
+                    PrintToChat(ply, Lang("ScheduledMessagesRandomUsage", ply.Id));
                     return false;
             }
         }
@@ -633,7 +636,7 @@ namespace Oxide.Plugins
         private bool HelpCommand(IPlayer ply, string command, string[] args)
         {
             // Send the player the help text.
-            ply.Reply(Lang("ScheduledMessagesHelp", ply.Id,
+            PrintToChat(ply, Lang("ScheduledMessagesHelp", ply.Id,
                 IsTimerRunning() ? Lang("on", ply.Id) : Lang("off", ply.Id),
                 $"Add - {Lang("ScheduledMesssagesAddUsage", ply.Id)}\n" +
                 $"Remove - {Lang("ScheduledMessagesRemoveUsage", ply.Id)}\n" +
@@ -729,6 +732,23 @@ namespace Oxide.Plugins
         private string Lang(string key, string id = null, params object[] args)
         {
             return string.Format(lang.GetMessage(key, this, id), args);
+        }
+
+        /// <summary>
+        /// Prints a message to a players chat.
+        /// </summary>
+        /// <param name="ply">The player to send the message to.</param>
+        /// <param name="message">The message to send, supports formatting.</param>
+        /// <param name="args">The variables to pass to string.Format if message needs formatting.</param>
+        private void PrintToChat(IPlayer ply, string message, params object[] args)
+        {
+#if RUST
+            // Use console command so we can include a different avatarID.
+            ply.Command("chat.add", 2, config.scheduledMessagesAvatarID, args.Length > 0 ? string.Format(message, args) : message);
+#else
+            // Just use default replying if we're not in Rust.
+            ply.Reply(args.Length > 0 ? string.Format(message, args) : message);
+#endif
         }
 
         /// <summary>
