@@ -120,6 +120,8 @@ namespace Oxide.Plugins
                 ["ScheduledMessagesAdded"] = "The message '{0}' has been added!",
                 // When a message gets removed.
                 ["ScheduledMessagesRemoved"] = "The message at position {0} has been removed!",
+                // When a message gets edited.
+                ["ScheduledMessagesEdited"] = "The message at position {0} has been changed to '{1}'",
                 // When all current messages are shown.
                 ["ScheduledMessagesShow"] = "These are the current messages:\n{0}",
                 // When the avatar is changed.
@@ -151,6 +153,8 @@ namespace Oxide.Plugins
                 ["ScheduledMessagesAddUsage"] = "Usage: <scheduledmessages/sm> <add/a> <message>",
                 // Usage text for remove command.
                 ["ScheduledMessagesRemoveUsage"] = "Usage: <scheduledmessages/sm> <remove/r> <position>",
+                // Usage text for edit command.
+                ["ScheduledMessagesEditUsage"] = "Usage: <scheduledmessages/smsg> <edit/e> <position> <message>",
                 // Usage text for show command.
                 ["ScheduledMessagesShowUsage"] = "Usage: <scheduledmessages/sm> <show/s>",
                 // Usage text for set avatar command.
@@ -198,6 +202,7 @@ namespace Oxide.Plugins
             // Register the permissions we need.
             permission.RegisterPermission("scheduledmessages.add", this);
             permission.RegisterPermission("scheduledmessages.remove", this);
+            permission.RegisterPermission("scheduledmessages.edit", this);
             permission.RegisterPermission("scheduledmessages.show", this);
             permission.RegisterPermission("scheduledmessages.setinterval", this);
             permission.RegisterPermission("scheduledmessages.on", this);
@@ -342,6 +347,11 @@ namespace Oxide.Plugins
                 case "r":
                     configEdited = RemoveCommand(ply, command, args);
                     break;
+                // Edit command.
+                case "edit":
+                case "e":
+                    configEdited = EditCommand(ply, command, args);
+                    break;
                 // Show command.
                 case "show":
                 case "s":
@@ -456,11 +466,57 @@ namespace Oxide.Plugins
             {
                 // Something went wrong, let the player know how to use the command.
                 PrintToChat(ply, Lang("ScheduledMessagesRemoveUsage", ply.Id));
-                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
-                    // Let the player know the message at that index+1 was edited.
-                    PrintToChat(ply, Lang("ScheduledMessagesEdited", ply.Id, args[1], newMessage));
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Sub-command for editing a scheduled message.
+        /// </summary>
+        /// <param name="ply">The player executing the command.</param>
+        /// <param name="command">The command used.<param>
+        /// <param name="args">The arguments passed in the message.</param>
+        /// <returns></returns>
+        private bool EditCommand(IPlayer ply, string command, string[] args)
+        {
+            // Check if the player has the specific permission.
+            if (!ply.HasPermission("scheduledmessages.edit"))
+            {
+                PrintToChat(ply, Lang("MissingPermission", ply.Id, $"{command} {args[0]}"));
+                return false;
+            }
+
+            try
+            {
+                // Attempt to parse the message number passed.
+                int messageNumber = int.Parse(args[1]);
+                // Create the new message.
+                string newMessage = "";
+                for (int i=2; i<args.Length; i++)
+                    newMessage += $" {args[i]}";
+                newMessage = newMessage.Trim();
+
+                // Check that the new rule we got isn't empty.
+                if (newMessage != "")
+                {
+                    // Edit the rule at the parsed index.
+                    config.scheduledMessages[messageNumber - 1] = newMessage;
+                    // Let the player know the message at that index+1 was edited.
+                    PrintToChat(ply, Lang("ScheduledMessagesEdited", ply.Id, args[1], newMessage));
+
+                    return true;
+                }
+                else
+                    PrintToChat(ply, Lang("ScheduledMessagesEditUsage", ply.Id));
+            }
+            catch (Exception)
+            {
+                // Something went wrong, let the player know how to use the command.
+                PrintToChat(ply, Lang("ScheduledMessagesEditUsage", ply.Id));
+                return false;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -704,6 +760,7 @@ namespace Oxide.Plugins
                 IsTimerRunning() ? Lang("on", ply.Id) : Lang("off", ply.Id),
                 $"Add - {Lang("ScheduledMessagesAddUsage", ply.Id)}\n" +
                 $"Remove - {Lang("ScheduledMessagesRemoveUsage", ply.Id)}\n" +
+                $"Edit - {Lang("ScheduledMessagesEditUsage", ply.Id)}\n" +
                 $"Show - {Lang("ScheduledMessagesShowUsage", ply.Id)}\n" +
                 $"Set Avatar - {Lang("ScheduledMessagesSetAvatarUsage", ply.Id)}\n" +
                 $"Set Interval - {Lang("ScheduledMessagesSetIntervalUsage", ply.Id)}\n" +
