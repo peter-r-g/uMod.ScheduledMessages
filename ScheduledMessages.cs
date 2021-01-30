@@ -694,6 +694,7 @@ namespace Oxide.Plugins
                 $"Add - {Lang("ScheduledMessagesAddUsage", ply.Id)}\n" +
                 $"Remove - {Lang("ScheduledMessagesRemoveUsage", ply.Id)}\n" +
                 $"Show - {Lang("ScheduledMessagesShowUsage", ply.Id)}\n" +
+                $"Set Avatar - {Lang("ScheduledMessagesSetAvatarUsage", ply.Id)}\n" +
                 $"Set Interval - {Lang("ScheduledMessagesSetIntervalUsage", ply.Id)}\n" +
                 $"On - {Lang("ScheduledMessagesOnUsage", ply.Id)}\n" +
                 $"Off - {Lang("ScheduledMessagesOffUsage", ply.Id)}\n" +
