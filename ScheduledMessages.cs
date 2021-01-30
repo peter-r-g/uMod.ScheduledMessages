@@ -743,7 +743,7 @@ namespace Oxide.Plugins
             Server.Broadcast(message, null, avatarID);
 #else
             // Broadcast the message to all players.
-            server.Broadcast(message, null);
+            server.Broadcast(message);
 #endif
         }
 
