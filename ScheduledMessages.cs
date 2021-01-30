@@ -277,7 +277,7 @@ namespace Oxide.Plugins
             }
 
             // Boolean for whether the config has been edited during this function.
-            bool configEdited = false;
+            bool configEdited;
 
             // Provide different functionality based on the first argument (sub-command)
             switch (args[0])
@@ -399,7 +399,7 @@ namespace Oxide.Plugins
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Something went wrong, let the player know how to use the command.
                 ply.Reply(Lang("ScheduledMessagesRemoveUsage", ply.Id));
@@ -466,7 +466,7 @@ namespace Oxide.Plugins
                 ply.Reply(Lang("ScheduledMessagesAvatarChanged", ply.Id, args[1]));
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Something went wrong, let the player know how to use the command.
                 ply.Reply(Lang("ScheduledMessagesSetAvatarUsage", ply.Id));
@@ -499,7 +499,7 @@ namespace Oxide.Plugins
                 ply.Reply(Lang("ScheduledMessagesIntervalChanged", ply.Id, args[1]));
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Something went wrong, let the player know how to use the command.
                 ply.Reply(Lang("ScheduledMessagesSetIntervalUsage", ply.Id));
@@ -751,7 +751,7 @@ namespace Oxide.Plugins
         /// Helper function for checking if the scheduled messages timer is running or not.
         /// </summary>
         /// <returns>Whether the scheduled messages timer is running or not.</returns>
-        private bool IsTimerRunning() { return messageTimer != null && !messageTimer.Destroyed ? true : false; }
+        private bool IsTimerRunning() { return messageTimer != null && !messageTimer.Destroyed; }
         #endregion
     }
 }
