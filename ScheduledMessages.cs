@@ -204,6 +204,7 @@ namespace Oxide.Plugins
             permission.RegisterPermission("scheduledmessages.remove", this);
             permission.RegisterPermission("scheduledmessages.edit", this);
             permission.RegisterPermission("scheduledmessages.show", this);
+            permission.RegisterPermission("scheduledmessages.setavatar", this);
             permission.RegisterPermission("scheduledmessages.setinterval", this);
             permission.RegisterPermission("scheduledmessages.on", this);
             permission.RegisterPermission("scheduledmessages.off", this);
