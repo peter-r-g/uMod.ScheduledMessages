@@ -548,12 +548,23 @@ namespace Oxide.Plugins
             try
             {
                 // Attempt to parse the new interval.
-                config.scheduledMesssagesInterval = float.Parse(args[1]);
-                // Start the scheduled messages.
-                StartScheduledMessages();
-                return true;
+                float newInterval = float.Parse(args[1]);
+                // Check if we at least got a somewhat sensible number.
+                if (newInterval > 0)
+                {
+                    config.scheduledMesssagesInterval = newInterval;
+                    // Start the scheduled messages.
+                    StartScheduledMessages();
                     // Let the player know the interval has been changed.
                     PrintToChat(ply, Lang("ScheduledMessagesIntervalChanged", ply.Id, args[1]));
+                    return true;
+                }
+                // Didn't get a sensible number, just show help text.
+                else
+                {
+                    PrintToChat(ply, Lang("ScheduledMessagesSetIntervalUsage", ply.Id));
+                    return false;
+                }
             }
             catch (Exception)
             {
