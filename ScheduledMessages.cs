@@ -462,7 +462,7 @@ namespace Oxide.Plugins
             {
                 // Attempt to parse the new avatar.
                 config.scheduledMessagesAvatarID = ulong.Parse(args[1]);
-                // Let the player know the interval has been changed.
+                // Let the player know the avatar has been changed.
                 ply.Reply(Lang("ScheduledMessagesAvatarChanged", ply.Id, args[1]));
                 return true;
             }
