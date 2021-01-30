@@ -691,7 +691,7 @@ namespace Oxide.Plugins
             // Send the player the help text.
             PrintToChat(ply, Lang("ScheduledMessagesHelp", ply.Id,
                 IsTimerRunning() ? Lang("on", ply.Id) : Lang("off", ply.Id),
-                $"Add - {Lang("ScheduledMesssagesAddUsage", ply.Id)}\n" +
+                $"Add - {Lang("ScheduledMessagesAddUsage", ply.Id)}\n" +
                 $"Remove - {Lang("ScheduledMessagesRemoveUsage", ply.Id)}\n" +
                 $"Show - {Lang("ScheduledMessagesShowUsage", ply.Id)}\n" +
                 $"Set Interval - {Lang("ScheduledMessagesSetIntervalUsage", ply.Id)}\n" +
