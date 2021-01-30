@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿//#define ScheduledMessages_DEBUG
+// Uncomment above to enable debug statements. Will only be useful for developers or when debugging a problem.
+
+using Newtonsoft.Json;
 using Oxide.Core.Libraries.Covalence;
 using System;
 using System.Collections.Generic;
@@ -56,15 +59,25 @@ namespace Oxide.Plugins
         /// </summary>
         protected override void LoadConfig()
         {
+#if ScheduledMessages_DEBUG
+            Puts("Started loading config...");
+#endif
             base.LoadConfig();
             config = Config.ReadObject<Configuration>();
 
             // No existing config found, load default one and save it.
             if (config == null)
             {
+#if ScheduledMessages_DEBUG
+                Puts("Fresh install or missing config, creating default config and saving it...");
+#endif
                 LoadDefaultConfig();
                 SaveConfig();
             }
+
+#if ScheduledMessages_DEBUG
+            Puts("Loaded config.");
+#endif
         }
 
         /// <summary>
@@ -93,6 +106,10 @@ namespace Oxide.Plugins
         /// </summary>
         protected override void LoadDefaultMessages()
         {
+#if ScheduledMessages_DEBUG
+            Puts("Started registering languages...");
+#endif
+
             // English translation.
             lang.RegisterMessages(new Dictionary<string, string>
             {
@@ -154,6 +171,10 @@ namespace Oxide.Plugins
             }, this);
 
             // Add other languages here.
+
+#if ScheduledMessages_DEBUG
+            Puts("Finished registering languages.");
+#endif
         }
         #endregion
 
@@ -164,6 +185,9 @@ namespace Oxide.Plugins
         /// <param name="initial">Whether this is being called on server finishing startup or not.</param>
         void OnServerInitialized(bool initial)
         {
+#if ScheduledMessages_DEBUG
+            Puts("Loading plugin...");
+#endif
             // Create random number generator.
             rand = new System.Random();
 
@@ -179,6 +203,10 @@ namespace Oxide.Plugins
             permission.RegisterPermission("scheduledmessages.on", this);
             permission.RegisterPermission("scheduledmessages.off", this);
             permission.RegisterPermission("scheduledmessages.random", this);
+
+#if ScheduledMessages_DEBUG
+            Puts("Finished loading plugin.");
+#endif
         }
 
         /// <summary>
@@ -186,8 +214,15 @@ namespace Oxide.Plugins
         /// </summary>
         void Unload()
         {
+#if ScheduledMessages_DEBUG
+            Puts("Started unloading plugin...");
+#endif
             // Cleanup after ourselves.
             StopScheduledMessages();
+
+#if ScheduledMessages_DEBUG
+            Puts("Finished unloading plugin.");
+#endif
         }
         #endregion
 
@@ -197,6 +232,10 @@ namespace Oxide.Plugins
         /// </summary>
         private void StartScheduledMessages()
         {
+#if ScheduledMessages_DEBUG
+            Puts("Starting/Restarting messages timer...");
+#endif
+
             // Create the message timer.
             if (messageTimer == null || messageTimer.Destroyed)
                 messageTimer = timer.Every(config.scheduledMesssagesInterval, NextScheduledMessage);
@@ -216,6 +255,10 @@ namespace Oxide.Plugins
         /// </summary>
         private void StopScheduledMessages()
         {
+#if ScheduledMessages_DEBUG
+            Puts("Stopping messages timer...");
+#endif
+
             // Only destroy the timer if it exists and is not destroyed already.
             if (messageTimer != null && !messageTimer.Destroyed)
                 messageTimer.Destroy();
@@ -263,6 +306,9 @@ namespace Oxide.Plugins
         [Command("scheduledmessages", "sm", "smsg"), Permission("scheduledmessages.cmd")]
         private void ScheduledMessagesCommand(IPlayer ply, string command, string[] args)
         {
+#if ScheduledMessages_DEBUG
+            Puts($"{ply.Name} used command.");
+#endif
             // Check if the player has the specific permission.
             if (!ply.HasPermission("scheduledmessages.cmd"))
             {
@@ -275,6 +321,10 @@ namespace Oxide.Plugins
                 HelpCommand(ply, command, args);
                 return;
             }
+
+#if ScheduledMessages_DEBUG
+            Puts($"{ply.Name} passed initial checks.");
+#endif
 
             // Boolean for whether the config has been edited during this function.
             bool configEdited;
@@ -325,6 +375,9 @@ namespace Oxide.Plugins
                     break;
             }
 
+#if ScheduledMessages_DEBUG
+            Puts($"{ply.Name} edited config: {configEdited.ToString()}");
+#endif
             // If the config has been edited, save the changes.
             if (configEdited)
                 SaveConfig();
@@ -731,6 +784,9 @@ namespace Oxide.Plugins
         /// <returns></returns>
         private string Lang(string key, string id = null, params object[] args)
         {
+#if ScheduledMessages_DEBUG
+            Puts($"Localizing '{key}'");
+#endif
             return string.Format(lang.GetMessage(key, this, id), args);
         }
 
@@ -742,6 +798,9 @@ namespace Oxide.Plugins
         /// <param name="args">The variables to pass to string.Format if message needs formatting.</param>
         private void PrintToChat(IPlayer ply, string message, params object[] args)
         {
+#if ScheduledMessages_DEBUG
+            Puts($"Sending '{message}' to {ply.Name}...");
+#endif
 #if RUST
             // Use console command so we can include a different avatarID.
             ply.Command("chat.add", 2, config.scheduledMessagesAvatarID, args.Length > 0 ? string.Format(message, args) : message);
@@ -758,6 +817,9 @@ namespace Oxide.Plugins
         /// <param name="avatarID">(Rust only) the SteamID64 of the avatar to use in the messages.</param>
         private void BroadcastMessage(string message, ulong avatarID=0)
         {
+#if ScheduledMessages_DEBUG
+            Puts($"Broadcasting '{message}'...");
+#endif
 #if RUST
             // Broadcast the message to all players with the provided AvatarID.
             Server.Broadcast(message, null, avatarID);
