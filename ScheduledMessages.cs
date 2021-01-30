@@ -309,7 +309,7 @@ namespace Oxide.Plugins
         /// <param name="ply">The player executing the command.</param>
         /// <param name="command">The command used.</param>
         /// <param name="args">The arguments passed in the message.</param>
-        [Command("scheduledmessages", "sm", "smsg"), Permission("scheduledmessages.cmd")]
+        [Command("scheduledmessages", "smsg"), Permission("scheduledmessages.cmd")]
         private void ScheduledMessagesCommand(IPlayer ply, string command, string[] args)
         {
 #if ScheduledMessages_DEBUG
