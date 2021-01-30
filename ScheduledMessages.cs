@@ -449,7 +449,7 @@ namespace Oxide.Plugins
                 // Attempt to parse the index passed.
                 int removeIndex = int.Parse(args[1]);
                 // Attempt to remove the message at the parsed index.
-                config.scheduledMessages.RemoveAt(removeIndex);
+                config.scheduledMessages.RemoveAt(removeIndex-1);
                 // Let the player know the message at that index was removed.
                 PrintToChat(ply, Lang("ScheduledMessagesRemoved", ply.Id, args[1]));
 
@@ -541,7 +541,7 @@ namespace Oxide.Plugins
             // There are messages registered.
             else
                 for (int i = 0; i < config.scheduledMessages.Count; i++)
-                    scheduledMessages += $"{i}: {config.scheduledMessages[i]}\n";
+                    scheduledMessages += $"{i+1}: {config.scheduledMessages[i]}\n";
 
             // Show the player all the messages that are registered.
             PrintToChat(ply, Lang("ScheduledMessagesShow", ply.Id, scheduledMessages));
